@@ -17,12 +17,6 @@ except ValueError:
     print("MIN-LENGTH and TOP-X must be a integer!")
     quit()
 
-# Set exclude words
-if len(sys.argv) > 4:
-    exclude_words = sys.argv[4:]
-else:
-    exclude_words = []
-
 # Read file and parse data
 words = {}
 try:
@@ -35,7 +29,7 @@ try:
             line = line.replace("’", " ").replace("'", " ")
 
             for word in line.split(" "):
-                if len(word) >= sys.argv[2] and word not in exclude_words:
+                if len(word) >= sys.argv[2]:
                     if not words.get(word, False):
                         words[word] = 1
                     else:
@@ -43,6 +37,15 @@ try:
 except:
     print("Can't read INPUTFILE!")
     quit()
+
+# Set exclude words
+if len(sys.argv) > 4:
+    exclude_words = sys.argv[4:]
+    for word in exclude_words:
+        try:
+            del(words[word])
+        except KeyError:
+            print(f"WARNING: {word} was not found in text")
 
 # Output words with top 20 count 
 for i in sorted(set(sorted(words.values(), reverse=True)[0:sys.argv[3]]), reverse=True):

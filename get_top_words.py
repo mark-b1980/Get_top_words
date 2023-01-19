@@ -3,7 +3,7 @@ import sys
 
 # Check if programm started with all arguments
 if len(sys.argv) < 3 or "-h" in sys.argv:
-    print("USAGE: get_top_words.py INPUTFILE MIN-LENGTH [TOP-X]\n")
+    print("USAGE: get_top_words.py INPUTFILE MIN-LENGTH [TOP-X default=20] [EXCLUDE-WORD1] [EXCLUDE-WORD2] [EXCLUDE-WORD2] ...\n")
     quit()
 
 # Check if 2nd argument is an integer
@@ -17,6 +17,12 @@ except ValueError:
     print("MIN-LENGTH and TOP-X must be a integer!")
     quit()
 
+# Set exclude words
+if len(sys.argv) > 4:
+    exclude_words = sys.argv[4:]
+else:
+    exclude_words = []
+
 # Read file and parse data
 words = {}
 try:
@@ -29,7 +35,7 @@ try:
             line = line.replace("’", " ").replace("'", " ")
 
             for word in line.split(" "):
-                if len(word) >= sys.argv[2]:
+                if len(word) >= sys.argv[2] and word not in exclude_words:
                     if not words.get(word, False):
                         words[word] = 1
                     else:

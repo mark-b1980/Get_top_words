@@ -26,6 +26,7 @@ try:
             line = line.replace(".", " ").replace("!", " ").replace("?", " ")
             line = line.replace(",", " ").replace(";", " ").replace("-", " ")
             line = line.replace("@", " ").replace("#", " ").replace(":", " ")
+            line = line.replace("’", " ").replace("'", " ")
 
             for word in line.split(" "):
                 if len(word) >= sys.argv[2]:

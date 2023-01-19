@@ -38,7 +38,7 @@ except:
     quit()
 
 # Output words with top 20 count 
-for i in sorted(words.values(), reverse=True)[0:sys.argv[3]]:
+for i in sorted(set(sorted(words.values(), reverse=True)[0:sys.argv[3]]), reverse=True):
     print(f"{i:>4}: ", end="")
     for word, count in words.items():
         if count == i:
